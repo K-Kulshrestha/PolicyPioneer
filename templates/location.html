@@ -1,160 +1,146 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
-  <link rel="stylesheet" type="text/css" href="../static/map.css">
-  <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
-  <style>
-    .marker {
-      background-color: #0074e4;
-      color: #fff;
-      border-radius: 50%;
-      padding: 10px;
-      font-size: 16px;
-    }
-  </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <!-- Add the Mapbox CSS and JavaScript -->
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet'>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
 </head>
 <body>
-  <button id="get-location">Get My Location</button>
-  <div id="map"></div>
-  <div id="location-info">
-    <p><span id="location-name"></span></p>
-  </div>
-  <div id="business-info">
-    <h2>Business Rates in the Area</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Business Name</th>
-          <th>Category</th>
-          <th>Rate</th>
-          <th>Location</th>
-        </tr>
-      </thead>
-      <tbody id="business-list"></tbody>
-    </table>
-  </div>
-  <button id="clear-quotes">Clear Quotes</button>
-  <script>
-    mapboxgl.accessToken = 'pk.eyJ1Ijoia3NoaXRpajYiLCJhIjoiY2xvbDMyamNvMTdwZDJxcHFxc2I5aWtnbyJ9.ac-Jik59TGpDbMILepcv5A';
+    <header>
+        <h1>Policy Pioneer</h1>
+        <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+    </header>
 
-    const map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/mapbox/satellite-streets-v11',
-      center: [0, 0],
-      zoom: 0,
-      bearing: 0,
-    });
+    <nav id="sidebar" style="visibility: hidden;">
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('liabilities') }}">Liabilities</a></li>
+            <li><a href="{{ url_for('propertyCoverage') }}">Property Coverage</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+        </ul>
+    </nav>
 
-    const locationInfo = document.getElementById('location-info');
-    const locationNameElement = document.getElementById('location-name');
-    const businessList = document.getElementById('business-list');
+    <section id="content">
+        <!-- "Get Location" button and map -->
+        <div class="map-container">
+            <button id="get-location">Get My Location</button>
+            <div id="map"></div>
+            <div id="location-info">
+                <p id="location-name">Location: Loading...</p>
+            </div>
+        </div>
 
-    function updateLocationInfo(locationName) {
-      locationNameElement.textContent = locationName;
-    }
+        <!-- JavaScript to randomly select a category and display insurance details -->
+        <div class="card">
+            <h2 id="category-title">Category Title</h2>
+            <p id "category-description">Category Description</p>
+            <p id="insurance-facts">Insurance Facts: Loading...</p>
+            <p id="insurance-estimate">Insurance Estimate: Loading...</p>
+        </div>
 
-    // Generate random business data
-    const businesses = generateRandomBusinesses(10);
+        <!-- Random insurance-related quote -->
+        <div class="card">
+            <h2>Insurance Quote</h2>
+            <p id="insurance-quote">"Insurance is the safety net for life's uncertainties."</p>
+        </div>
+    </section>
 
-    // Create markers for businesses
-    businesses.forEach(business => {
-      const businessMarker = new mapboxgl.Marker({ color: '#0074e4' })
-        .setLngLat([business.longitude, business.latitude])
-        .addTo(map);
+    <footer>
+        <p>&copy; 2023 LLMK Corp</p>
+    </footer>
 
-      businessMarker.getElement().innerHTML = `<div class="marker">${business.name}</div>`;
+    <script>
+        // JavaScript to randomly select a category
+        const categories = [
+            {
+                title: 'Home-Based Business',
+                description: 'Operate your business from home.',
+                facts: 'Insurance for home-based businesses tends to be more affordable.',
+                estimate: `Insurance Estimate: $${Math.floor(Math.random() * 1000) + 500}`
+            },
+            {
+                title: 'Privately Owned Building',
+                description: 'Own your own building for your business.',
+                facts: 'Owning your building can lead to cheaper insurance costs but requires property insurance.',
+                estimate: `Insurance Estimate: $${Math.floor(Math.random() * 2000) + 1000}`
+            },
+            {
+                title: 'Leased Building',
+                description: 'Rent a building for your business.',
+                facts: 'Leasing a building may have lower property insurance costs but still requires liability insurance.',
+                estimate: `Insurance Estimate: $${Math.floor(Math.random() * 1500) + 750}`
+            },
+        ];
 
-      businessMarker.getElement().addEventListener('click', () => {
-        displayBusinessQuote(business);
-      });
-    });
+        const randomCategory = categories[Math.floor(Math.random() * categories.length)];
 
-    document.getElementById('get-location').addEventListener('click', function() {
-      if ('geolocation' in navigator) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
+        document.getElementById('category-title').textContent = randomCategory.title;
+        document.getElementById('category-description').textContent = randomCategory.description;
+        document.getElementById('insurance-facts').textContent = `${randomCategory.facts}`;
+        document.getElementById('insurance-estimate').textContent = `${randomCategory.estimate}`;
 
-          map.flyTo({
-            center: [longitude, latitude],
-            zoom: 16,
-            speed: 1.5,
-            curve: 1.4,
-            easing: function (t) { return t; }
-          });
+        // Generate a random insurance-related quote
+        const insuranceQuotes = [
+            "Insurance is the safety net for life's uncertainties.",
+            "The best time to get insurance was yesterday; the second best time is now.",
+            "Insurance provides peace of mind in an unpredictable world.",
+            "Insurance: your shield against the storms of life.",
+            "A good insurance policy is like a warm blanket on a cold night."
+        ];
 
-          const geocodingApiUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${mapboxgl.accessToken}`;
-          fetch(geocodingApiUrl)
-            .then(response => response.json())
-            .then(data => {
-              if (data.features && data.features.length > 0) {
-                const locationName = data.features[0].place_name;
-                updateLocationInfo(locationName);
-              } else {
-                updateLocationInfo('Location name not found');
-              }
-            })
-            .catch(error => {
-              console.error('Geocoding error:', error);
-              updateLocationInfo('Location name not found');
-            });
+        const randomQuote = insuranceQuotes[Math.floor(Math.random() * insuranceQuotes.length)];
 
-          // Calculate and display business rates
-          displayBusinessRates(latitude, longitude);
-        }, function(error) {
-          console.error('Geolocation error:', error.message);
-          updateLocationInfo('Location name not found');
+        document.getElementById('insurance-quote').textContent = `"${randomQuote}"`;
+
+        // Mapbox API functionality (similar to your previous code)
+        mapboxgl.accessToken = 'pk.eyJ1Ijoia3NoaXRpajYiLCJhIjoiY2xvbG4zOXU0MGYxYzJsbjNxZW9qOWdjYSJ9.MDpMb7litim97rQ5nltPLg'; // Replace with your Mapbox Access Token
+
+        var map = new mapboxgl.Map({
+          container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [-74.5, 40],
+            zoom: 9
         });
-      } else {
-        console.error('Geolocation is not available in this browser.');
-        updateLocationInfo('Geolocation not available');
-      }
-    });
 
-    // Function to generate random businesses
-    function generateRandomBusinesses(count) {
-      const businesses = [];
-      for (let i = 0; i < count; i++) {
-        const business = {
-          name: `Business ${i + 1}`,
-          latitude: getRandomLatitude(),
-          longitude: getRandomLongitude(),
-          category: getRandomCategory(),
-        };
-        businesses.push(business);
-      }
-      return businesses;
-    }
+        document.getElementById('get-location').addEventListener('click', function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
 
-    // Function to get a random latitude
-    function getRandomLatitude() {
-      return Math.random() * (90 - (-90)) + (-90);
-    }
+                    map.flyTo({
+                        center: [longitude, latitude],
+                        zoom: 15
+                    });
 
-    // Function to get a random longitude
-    function getRandomLongitude() {
-      return Math.random() * (180 - (-180)) + (-180);
-    }
+                    var geocodingApiUrl = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + longitude + ',' + latitude + '.json?access_token=' + mapboxgl.accessToken;
 
-    // Function to get a random business category
-    function getRandomCategory() {
-      const categories = ['Home', 'Rental', 'Owner of the Building'];
-      const randomIndex = Math.floor(Math.random() * categories.length);
-      return categories[randomIndex];
-    }
+                    fetch(geocodingApiUrl)
+                        .then(response => response.json())
+                        .then(data => {
+                            var locationName = data.features[0].text;
+                            var locationNameText = document.getElementById('location-name');
 
-    // Function to display business quote
-    function displayBusinessQuote(business) {
-      const quote = getBusinessQuote(business);
-      alert(quote);
-    }
-
-    // Function to get a business quote
-    function getBusinessQuote(business) {
-      // Replace with your business quote logic
-      return `Name: ${business.name}\nCategory: ${business.category}\nRate: $${(Math.random() * 1000).toFixed(2)}/month`;
-    }
-  </script>
+                            if (locationName) {
+                                locationNameText.textContent = 'Location: ' + locationName;
+                            } else {
+                                locationNameText.textContent = 'Location not found';
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error fetching location name:', error);
+                        });
+                });
+            } else {
+                alert('Geolocation is not supported in your browser.');
+            }
+        });
+    </script>
 </body>
 </html>
+

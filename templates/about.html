@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+    <header>
+        <h1>About Policy Pioneer</h1>
+        <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+    </header>
+
+    <nav id="sidebar" style="visibility: hidden;">
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('liabilities') }}">Liabilities</a></li>
+            <li><a href="{{ url_for('propertyCoverage') }}">Property Coverage</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="content">
+        <div class="card">
+            <h2>Our Mission</h2>
+            <p>At Policy Pioneer, our mission is to revolutionize the small business insurance experience. We believe that insurance should be accessible, understandable, and tailored to your unique needs. We're here to simplify the complex world of insurance and make it work for you.</p>
+        </div>
+
+        <div class="card">
+            <h2>Our Team</h2>
+            <p>Our dedicated team of experts is passionate about making insurance more transparent and user-friendly. With years of experience in the insurance industry, we are committed to providing you with the best solutions and support.</p>
+        </div>
+
+        <div class="card">
+            <h2>Get in Touch</h2>
+            <p>If you have any questions, suggestions, or feedback, don't hesitate to contact us. We value your input and are here to assist you in any way we can. Reach out to us through the "Contact" page.</p>
+            <a href="{{ url_for('contact') }}">Contact us</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 LLMK Corp</p>
+    </footer>
+</body>
+</html>

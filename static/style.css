@@ -14,6 +14,46 @@ header {
     padding: 10px;
 }
 
+/* Adjust input box styles for aesthetics */
+.input-container {
+    margin-bottom: 20px;
+}
+
+.input-container label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-container input,
+.input-container textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.input-container textarea {
+    resize: vertical;
+}
+
+.button-container {
+    text-align: right;
+}
+
+.button-container button {
+    background-color: #0074e4;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-container button:hover {
+    background-color: #0050a0;
+}
+
+
 a{
     color: #fff;
     text-align: center;
@@ -148,5 +188,13 @@ footer {
 
     nav a {
         font-size: 18px;
+    }
+}
+
+/* Adjust input box styles for smaller screens */
+@media screen and (max-width: 600px) {
+    .contact-form input,
+    .contact-form textarea {
+        width: 100%; /* Make input boxes full-width */
     }
 }
