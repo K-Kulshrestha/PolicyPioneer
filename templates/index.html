@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <header>
@@ -11,9 +11,9 @@
 
     <nav>
         <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="liabilities.html">Liabilities</a></li>
-            <li><a href="propertyCoverage.html">Property Coverage</a></li>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('liabilities') }}">Liabilities</a></li>
+            <li><a href="{{ url_for('propertyCoverage') }}">Property Coverage</a></li>
         </ul>
     </nav>
 
@@ -35,6 +35,6 @@
         <p>&copy; 2023 LLMK Corp</p>
     </footer>
 
-    <script src="../static/script.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

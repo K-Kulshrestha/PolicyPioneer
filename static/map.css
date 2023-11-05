@@ -48,8 +48,6 @@
   /* Media query for smaller screens */
   @media screen and (max-width: 768px) {
 
-    
-
     #location-info {
       font-size: 24px; /* Increase text size for smaller screens */
     }

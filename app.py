@@ -14,42 +14,35 @@ collection = db.your_collection
 app = Flask(__name__)
 
 @app.route('/')
-def hello_world():
-    return 'Hello, Flask!'
+def index():
+    return render_template('index.html')
 
-@app.route('/liabilities')
+@app.route('/liabilities', methods=["POST", "GET"])
 def liabilities():
     return render_template('liabilities.html')
     
-@app.route('/propertyCoverage')
+@app.route('/propertyCoverage', methods=["POST", "GET"])
 def propertyCoverage():
     return render_template('propertyCoverage.html')
 
-@app.route('/about')
+@app.route('/about', methods=["POST", "GET"])
 def about():
-    return 'This is the About page.'
+    return render_template('about.html')
 
-@app.route('/contact')
+@app.route('/contact', methods=["POST", "GET"])
 def contact():
-    return 'Contact us at example@example.com'
+    return render_template('contact.html')
 
-@app.route('/profile/<username>')
+@app.route('/profile/<username>', methods=["POST", "GET"])
 def profile(username):
+    # You can pass the 'username' variable to the template
     return render_template('profile.html', username=username)
 
-@app.route('/get_data')
+@app.route('/get_data', methods=["GET"])
 def get_data():
     data = collection.find()
     # Process the data or return it as needed
-    return str(list(data))
+    return render_template('data.html', data=list(data))
 
 if __name__ == '__main__':
     app.run()
-
-# Insert data  
-data = {"name": "John", "age": 30}
-collection.insert_one(data)
-
-# Retrieve data
-result = collection.find_one({"name": "John"})
-print(result)
