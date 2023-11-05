@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const analyzeButton = document.getElementById("analyze-button");
-    const settingsButton = document.getElementById("settings-button");
+    const analyzeButton = document.getElementById("location-button");
+    const settingsButton = document.getElementById("bType-button");
 
     analyzeButton.addEventListener("click", function () {
-        alert("Analyzing data...");
+        alert("Searching by Location...");
     });
 
     settingsButton.addEventListener("click", function () {
-        alert("Opening settings...");
+        alert("Searching by Business Information...");
     });
 });
