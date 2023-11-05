@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+  <link rel="stylesheet" type="text/css" href="../static/map.css">
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+</head>
+<body>
+  <button id="get-location">Get My Location</button>
+  <div id="map"></div>
+  <div id="location-info">
+    <p><span id="location-name"></span></p>
+  </div>
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1Ijoia3NoaXRpajYiLCJhIjoiY2xvbDMyamNvMTdwZDJxcHFxc2I5aWtnbyJ9.ac-Jik59TGpDbMILepcv5A';
+
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/satellite-streets-v11', // Use Satellite Streets style
+      center: [0, 0], // Center of the globe
+      zoom: 0, // Zoomed out to show the entire globe
+      bearing: 0, // Reset bearing to north
+    });
+
+    const locationInfo = document.getElementById('location-info');
+    const locationNameElement = document.getElementById('location-name');
+
+    function updateLocationInfo(locationName) {
+      locationNameElement.textContent = locationName;
+    }
+
+    document.getElementById('get-location').addEventListener('click', function() {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+
+          map.flyTo({
+            center: [longitude, latitude], // New center coordinates
+            zoom: 16, // Zoom level for the transition
+            speed: 1.5, // Transition speed
+            curve: 1.4, // Transition curve (higher values make it smoother)
+            easing: function (t) { return t; } // Transition easing function
+          });
+
+          const geocodingApiUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${mapboxgl.accessToken}`;
+          fetch(geocodingApiUrl)
+            .then(response => response.json())
+            .then(data => {
+              if (data.features && data.features.length > 0) {
+                const locationName = data.features[0].place_name;
+                updateLocationInfo(locationName);
+              } else {
+                updateLocationInfo('Location name not found');
+              }
+            })
+            .catch(error => {
+              console.error('Geocoding error:', error);
+              updateLocationInfo('Location name not found');
+            });
+        }, function(error) {
+          console.error('Geolocation error:', error.message);
+          updateLocationInfo('Location name not found');
+        });
+      } else {
+        console.error('Geolocation is not available in this browser.');
+        updateLocationInfo('Geolocation not available');
+      }
+    });
+  </script>
+</body>
+</html>
