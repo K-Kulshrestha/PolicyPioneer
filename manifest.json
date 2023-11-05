@@ -1,0 +1,16 @@
+{
+    "name": "PolicyPioneer",
+    "short_name": "PP",
+    "description": "Our mission is to revolutionize the small business insurance experience",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#0074e4",
+    "icons": [
+        {
+            "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP3qjAXcs9-IQDjVEBgNP3RH4-xEp2qyvwxA&usqp=CAU",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ]
+}
