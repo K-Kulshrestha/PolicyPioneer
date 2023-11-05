@@ -17,6 +17,14 @@ app = Flask(__name__)
 def hello_world():
     return 'Hello, Flask!'
 
+@app.route('/liabilities')
+def liabilities():
+    return render_template('liabilities.html')
+    
+@app.route('/propertyCoverage')
+def propertyCoverage():
+    return render_template('propertyCoverage.html')
+
 @app.route('/about')
 def about():
     return 'This is the About page.'
