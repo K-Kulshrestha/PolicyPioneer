@@ -2,20 +2,50 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </head>
 <body>
     <header>
         <h1>Liabilities Insurance</h1>
+        <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
     </header>
-    <nav>
+    <nav id="sidebar" style="visibility: hidden;">
         <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="liabilities.html">Liabilities</a></li>
-            <li><a href="propertyCoverage.html">Property Coverage</a></li>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('liabilities') }}">Liabilities</a></li>
+            <li><a href="{{ url_for('propertyCoverage') }}">Property Coverage</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
         </ul>
     </nav>
-    <!-- Content specific to the "Liabilities Insurance" page can be added here -->
+    <section id="content">
+        <div class="narrative">
+            <h2>Professional Liability Insurance (Errors and Omissions Insurance)</h2>
+            <p>
+                Professional Liability Insurance, also known as errors and omissions insurance, helps protect your business if you are sued for negligence in the performance of services you provide to your customers.
+            </p>
+        </div>
+        <div class="narrative">
+            <h3>Covers/Protections Against:</h3>
+            <ul>
+                <li>Actual or alleged acts or errors</li>
+                <li>Libel and slander allegations arising out of your professional services</li>
+                <li>Cost of legal defense for covered liability claims</li>
+            </ul>
+        </div>
+        <div class="narrative">
+            <h3>Cost:</h3>
+            <p>Several factors determine the cost, but we at Policy Pioneer quickly provide you estimates on our Home page.</p>
+        </div>
+        <div class="narrative">
+            <h3>Do I need it?</h3>
+            <p>
+                General liability on your business policy covers mistakes or errors. But unless your policy includes professional liability coverage, you’re probably not covered for things like botching a customer’s dye job, making errors on a client’s tax returns or misdiagnosing Fido’s upset tummy.
+            </p>
+        </div>
+    </section>
     <footer>
         <p>&copy; 2023 LLMK Corp</p>
     </footer>

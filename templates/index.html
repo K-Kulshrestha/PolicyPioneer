@@ -3,38 +3,60 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </head>
 <body>
     <header>
-        <h1>Dashboard</h1>
+        <h1>Policy Pioneer</h1>
+        <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
     </header>
 
-    <nav>
+    <nav id="sidebar" style="visibility: hidden;">
         <ul>
             <li><a href="{{ url_for('index') }}">Home</a></li>
             <li><a href="{{ url_for('liabilities') }}">Liabilities</a></li>
             <li><a href="{{ url_for('propertyCoverage') }}">Property Coverage</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
         </ul>
     </nav>
 
     <section id="content">
+        <!-- Use a simple message on the home page -->
         <div class="card">
-            <h2>Location</h2>
-            <p>Use your current location to see rates and plans.</p>
-            <button id="location-button">Search</button>
+            <h2>Welcome to Policy Pioneer</h2>
+            <p>Explore the options below to get started.</p>
+        </div>
+
+        <!-- Use clear, concise headings and descriptions for other pages -->
+        <div class="card">
+            <h2>Liabilities</h2>
+            <p>View information about your liabilities.</p>
+            <a href="{{ url_for('liabilities') }}">Learn more</a>
         </div>
 
         <div class="card">
-            <h2>Type of business</h2>
-            <p>Enter business info to see rates and plans.</p>
-            <button id="bType-button">Search</button>
+            <h2>Property Coverage</h2>
+            <p>Find information about property coverage.</p>
+            <a href="{{ url_for('propertyCoverage') }}">Learn more</a>
+        </div>
+
+        <div class="card">
+            <h2>About</h2>
+            <p>Discover more about us.</p>
+            <a href="{{ url_for('about') }}">Learn more</a>
+        </div>
+
+        <div class="card">
+            <h2>Contact</h2>
+            <p>Get in touch with us.</p>
+            <a href="{{ url_for('contact') }}">Contact us</a>
         </div>
     </section>
 
     <footer>
         <p>&copy; 2023 LLMK Corp</p>
     </footer>
-
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

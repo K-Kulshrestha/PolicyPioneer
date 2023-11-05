@@ -2,20 +2,59 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </head>
 <body>
     <header>
         <h1>Property Coverage Insurance</h1>
+        <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
     </header>
-    <nav>
+    <nav id="sidebar" style="visibility: hidden;">
         <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="liabilities.html">Liabilities</a></li>
-            <li><a href="propertyCoverage.html">Property Coverage</a></li>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('liabilities') }}">Liabilities</a></li>
+            <li><a href="{{ url_for('propertyCoverage') }}">Property Coverage</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
         </ul>
     </nav>
-    <!-- Content specific to the "Liabilities Insurance" page can be added here -->
+    <section id="content">
+        <div class="narrative">
+            <h2>Property Coverage Insurance</h2>
+            <p>
+                Having insurance for a business owner is one of the most crucial aspects of a business's lifespan. Let's take a look at some property coverage options.
+            </p>
+        </div>
+        <div class="narrative">
+            <h3>Business Owners Policy</h3>
+            <p>
+                Business Owners Policy, also known as errors and omissions insurance, helps protect your business if you are sued for negligence in the performance of services you provide to your customers.
+            </p>
+            <h4>Covers/Protections Against:</h4>
+            <ul>
+                <li>General Liability: This protects you against costly claims and lawsuits resulting from a customer being injured while at your business – and if you damage other people’s property.</li>
+                <li>Property Insurance: If buildings and other structures you own are damaged or destroyed, you’re covered. It also protects your office equipment, business equipment, and inventory from a covered loss.</li>
+                <li>Loss of Income: In the event your business is shut down (for up to 12 months), this coverage protects your income and provides help for ordinary payroll expenses.</li>
+                <li>Equipment Breakdown: When your covered equipment breaks down or is damaged by covered claims, we’ll help pay to get things back up and running.</li>
+                <li>Professional Liability: Unfortunately, you could be sued as a result of the services you provide to your customers. For specific occupations, this coverage can be added for protection against costly claims and lawsuits.</li>
+            </ul>
+        </div>
+        <div class="narrative">
+            <h3>Additional Coverages could include:</h3>
+            <ul>
+                <li>Commercial auto: covers the cars, trucks, vans, and other vehicles used for business. If you have multiple vehicles, talk to a local agent about available options.</li>
+                <li>Workers' compensation: protects your crew against work-related injuries or illness. Requirements for workers’ comp vary by state.</li>
+            </ul>
+        </div>
+        <div class="narrative">
+            <h3>Do I need it?</h3>
+            <p>
+                Well, did you know the average bodily injury or property damage claim could cost your business tens of thousands of dollars, or more? Could you afford to pay these costs out of pocket? What about fires, extreme weather events, theft and other mishaps, which could also put you out of business if you don’t have the proper coverage?
+            </p>
+        </div>
+    </section>
     <footer>
         <p>&copy; 2023 LLMK Corp</p>
     </footer>

@@ -4,6 +4,15 @@
   <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
   <link rel="stylesheet" type="text/css" href="../static/map.css">
   <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+  <style>
+    .marker {
+      background-color: #0074e4;
+      color: #fff;
+      border-radius: 50%;
+      padding: 10px;
+      font-size: 16px;
+    }
+  </style>
 </head>
 <body>
   <button id="get-location">Get My Location</button>
@@ -11,23 +20,55 @@
   <div id="location-info">
     <p><span id="location-name"></span></p>
   </div>
+  <div id="business-info">
+    <h2>Business Rates in the Area</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Business Name</th>
+          <th>Category</th>
+          <th>Rate</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody id="business-list"></tbody>
+    </table>
+  </div>
+  <button id="clear-quotes">Clear Quotes</button>
   <script>
     mapboxgl.accessToken = 'pk.eyJ1Ijoia3NoaXRpajYiLCJhIjoiY2xvbDMyamNvMTdwZDJxcHFxc2I5aWtnbyJ9.ac-Jik59TGpDbMILepcv5A';
 
     const map = new mapboxgl.Map({
       container: 'map',
-      style: 'mapbox://styles/mapbox/satellite-streets-v11', // Use Satellite Streets style
-      center: [0, 0], // Center of the globe
-      zoom: 0, // Zoomed out to show the entire globe
-      bearing: 0, // Reset bearing to north
+      style: 'mapbox://styles/mapbox/satellite-streets-v11',
+      center: [0, 0],
+      zoom: 0,
+      bearing: 0,
     });
 
     const locationInfo = document.getElementById('location-info');
     const locationNameElement = document.getElementById('location-name');
+    const businessList = document.getElementById('business-list');
 
     function updateLocationInfo(locationName) {
       locationNameElement.textContent = locationName;
     }
+
+    // Generate random business data
+    const businesses = generateRandomBusinesses(10);
+
+    // Create markers for businesses
+    businesses.forEach(business => {
+      const businessMarker = new mapboxgl.Marker({ color: '#0074e4' })
+        .setLngLat([business.longitude, business.latitude])
+        .addTo(map);
+
+      businessMarker.getElement().innerHTML = `<div class="marker">${business.name}</div>`;
+
+      businessMarker.getElement().addEventListener('click', () => {
+        displayBusinessQuote(business);
+      });
+    });
 
     document.getElementById('get-location').addEventListener('click', function() {
       if ('geolocation' in navigator) {
@@ -36,11 +77,11 @@
           const longitude = position.coords.longitude;
 
           map.flyTo({
-            center: [longitude, latitude], // New center coordinates
-            zoom: 16, // Zoom level for the transition
-            speed: 1.5, // Transition speed
-            curve: 1.4, // Transition curve (higher values make it smoother)
-            easing: function (t) { return t; } // Transition easing function
+            center: [longitude, latitude],
+            zoom: 16,
+            speed: 1.5,
+            curve: 1.4,
+            easing: function (t) { return t; }
           });
 
           const geocodingApiUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${mapboxgl.accessToken}`;
@@ -58,6 +99,9 @@
               console.error('Geocoding error:', error);
               updateLocationInfo('Location name not found');
             });
+
+          // Calculate and display business rates
+          displayBusinessRates(latitude, longitude);
         }, function(error) {
           console.error('Geolocation error:', error.message);
           updateLocationInfo('Location name not found');
@@ -67,6 +111,50 @@
         updateLocationInfo('Geolocation not available');
       }
     });
+
+    // Function to generate random businesses
+    function generateRandomBusinesses(count) {
+      const businesses = [];
+      for (let i = 0; i < count; i++) {
+        const business = {
+          name: `Business ${i + 1}`,
+          latitude: getRandomLatitude(),
+          longitude: getRandomLongitude(),
+          category: getRandomCategory(),
+        };
+        businesses.push(business);
+      }
+      return businesses;
+    }
+
+    // Function to get a random latitude
+    function getRandomLatitude() {
+      return Math.random() * (90 - (-90)) + (-90);
+    }
+
+    // Function to get a random longitude
+    function getRandomLongitude() {
+      return Math.random() * (180 - (-180)) + (-180);
+    }
+
+    // Function to get a random business category
+    function getRandomCategory() {
+      const categories = ['Home', 'Rental', 'Owner of the Building'];
+      const randomIndex = Math.floor(Math.random() * categories.length);
+      return categories[randomIndex];
+    }
+
+    // Function to display business quote
+    function displayBusinessQuote(business) {
+      const quote = getBusinessQuote(business);
+      alert(quote);
+    }
+
+    // Function to get a business quote
+    function getBusinessQuote(business) {
+      // Replace with your business quote logic
+      return `Name: ${business.name}\nCategory: ${business.category}\nRate: $${(Math.random() * 1000).toFixed(2)}/month`;
+    }
   </script>
 </body>
 </html>
