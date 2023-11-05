@@ -1,0 +1,8 @@
+# Ignore Flask-related files and directories
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+
+# Ignore the venv/ directory
+venv/
