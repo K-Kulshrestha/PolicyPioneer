@@ -49,5 +49,45 @@
     <footer>
         <p>&copy; 2023 LLMK Corp</p>
     </footer>
+
+    <!-- On-Screen Reader Functionality -->
+    <div id="screen-reader" style="position: absolute; top: -9999px; left: -9999px;">
+        <button id="startReading" onclick="startReading()">Start Reading</button>
+        <button id="stopReading" onclick="stopReading()">Stop Reading</button>
+        <div id="read-content"></div>
+    </div>
+
+    <script>
+        let isReading = false;
+        const screenReader = document.getElementById('screen-reader');
+        const startReadingButton = document.getElementById('startReading');
+        const stopReadingButton = document.getElementById('stopReading');
+        const readContent = document.getElementById('read-content');
+        const contentSection = document.querySelector('#content');
+
+        function startReading() {
+            isReading = true;
+            screenReader.style.top = '0';
+            startReadingButton.style.display = 'none';
+            stopReadingButton.style.display = 'block';
+            readContent.innerText = getContentToRead();
+        }
+
+        function stopReading() {
+            isReading = false;
+            screenReader.style.top = '-9999px';
+            startReadingButton.style.display = 'block';
+            stopReadingButton.style.display = 'none';
+            readContent.innerText = '';
+        }
+
+        function getContentToRead() {
+            return contentSection.innerText;
+        }
+
+        function toggleMenu() {
+            // Implement your toggleMenu functionality here.
+        }
+    </script>
 </body>
 </html>

@@ -1,5 +1,10 @@
-from flask import Flask, render_template
-from pymongo import MongoClient
+from flask import Flask, render_template, request, jsonify
+from pymongo import MongoClient 
+from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
+
+llm = OpenAI(openai_api_key="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")
+
 
 # Replace these placeholders with your actual MongoDB connection details
 MONGO_URI = "mongodb+srv://HackUTDx:hack23@cluster0.8ykqrpw.mongodb.net/HackUTD_X_StateFarm_Database?retryWrites=true&w=majority"
@@ -33,16 +38,18 @@ def about():
 def contact():
     return render_template('contact.html')
 
-@app.route('/profile/<username>', methods=["POST", "GET"])
-def profile(username):
-    # You can pass the 'username' variable to the template
-    return render_template('profile.html', username=username)
-
 @app.route('/get_data', methods=["GET"])
 def get_data():
     data = collection.find()
     # Process the data or return it as needed
     return render_template('data.html', data=list(data))
 
+@app.route('/chat', methods=["POST"])
+def chat():
+    user_input = request.form.get('user_input')  # Get user input from the web interface
+    response = chat_model.predict(user_input)  # Use the chat model to generate a response
+    return jsonify({"response": response})
+
 if __name__ == '__main__':
     app.run()
+
