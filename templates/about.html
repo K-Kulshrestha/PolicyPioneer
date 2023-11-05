@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+    <header>
+        <h1>Liabilities Insurance</h1>
+        <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+    </header>
+    <nav id="sidebar" style="visibility: hidden;">
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('liabilities') }}">Liabilities</a></li>
+            <li><a href="{{ url_for('propertyCoverage') }}">Property Coverage</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id = "content">
+        <div id = "vision">
+        <h2>Our Vision:</h2>
+        <p> 
+            Our vision for the future is to be the customer's first and best choice in the products and services we provide. 
+            We will continue to be the leader in the insurance industry and we will become a leader in the financial services arena. 
+            Our customers' needs will determine our path. Our values will guide us.
+        </p>
+        </div>
+        <div id = "values">
+            <h2>Our values:</h2>
+            <p>
+                We are people who make it our business to be like a good neighbor; who built a premier Company by selling and keeping promises through our 
+                marketing partnership; who bring diverse talents and experiences to our work of serving the State Farm customer.
+                Our success is built on a foundation of shared values — quality service and relationships, integrity and financial strength.
+            </p>
+        </div>
+    </section>
+</body>
