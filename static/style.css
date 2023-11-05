@@ -1,3 +1,11 @@
+/* Disable user zoom */
+html, body {
+    touch-action: manipulation; /* Disable pinch-to-zoom on touch devices */
+    user-select: none; /* Disable text selection */
+    -webkit-touch-callout: none; /* Disable callout (long-tap) menu on iOS */
+}
+
+
 /* Common styles for all screen sizes */
 body {
     font-family: Arial, sans-serif;
@@ -83,14 +91,11 @@ nav a {
 }
 
 .card {
-    border: 1px solid #666666;
     color: #fff;
     border-radius: 5px;
     padding: 20px;
     margin: 10px;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: rgba(0, 0, 0, 0.3);
 }
 
 /* Content styles */
@@ -123,8 +128,6 @@ footer {
     text-align: center;
     padding: 10px;
     font-weight: 100;
-    background-color: rgba(0, 0, 0, 0.3);
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 /* Media query for screens with a maximum width of 768px (typical for mobile devices) */
